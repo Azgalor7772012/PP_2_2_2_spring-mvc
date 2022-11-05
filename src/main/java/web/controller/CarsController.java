@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import web.dao.CarDAO;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class CarsController {
@@ -16,25 +15,17 @@ public class CarsController {
 
 
     @GetMapping("/cars")
-    public String getAmountCars(HttpServletRequest request,
+    public String getAmountCars(@RequestParam(value = "count", defaultValue = "5") String count,
                                 Model model) {
 
-        String amount = request.getParameter("count");
+            int integerCount = Integer.parseInt(count);
 
-        if (amount != null) {
-            int integerAmount = Integer.parseInt(amount);
-
-            if (integerAmount < 0 || integerAmount > 5) {
-                model.addAttribute("Cars", carDAO.getCars());
+            if (integerCount < 0 || integerCount > 5) {
+                integerCount = 5;
+                model.addAttribute("Cars", carDAO.returnAmountOfCars(integerCount));
             } else {
-                model.addAttribute("Cars", carDAO.returnAmountOfCars(integerAmount));
+                model.addAttribute("Cars", carDAO.returnAmountOfCars(integerCount));
             }
-
-        } else {
-            model.addAttribute("Cars", carDAO.getCars());
-        }
-
-//
 
         return "cars";
     }

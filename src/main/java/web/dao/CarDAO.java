@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Component
 public class CarDAO {
-    private final List<Car> cars;
+    private final  List<Car> cars;
 
     {
         cars = new ArrayList<>();
@@ -26,7 +26,7 @@ public class CarDAO {
 
     }
 
-    public List<Car> getCars() {
-        return cars;
-    }
+//    public List<Car> getCars() {
+//        return cars;
+//    }
 }
