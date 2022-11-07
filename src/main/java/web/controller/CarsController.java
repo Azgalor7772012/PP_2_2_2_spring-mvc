@@ -15,16 +15,14 @@ public class CarsController {
 
 
     @GetMapping("/cars")
-    public String getAmountCars(@RequestParam(value = "count", defaultValue = "5") String count,
+    public String getAmountCars(@RequestParam(value = "count", defaultValue = "5") Integer count,
                                 Model model) {
 
-            int integerCount = Integer.parseInt(count);
-
-            if (integerCount < 0 || integerCount > 5) {
-                integerCount = 5;
-                model.addAttribute("Cars", carDAO.returnAmountOfCars(integerCount));
+            if (count < 0 || count > 5) {
+                count = 5;
+                model.addAttribute("Cars", carDAO.returnAmountOfCars(count));
             } else {
-                model.addAttribute("Cars", carDAO.returnAmountOfCars(integerCount));
+                model.addAttribute("Cars", carDAO.returnAmountOfCars(count));
             }
 
         return "cars";
